@@ -26,6 +26,47 @@ const commands = [
   new SlashCommandBuilder()
     .setName("checkdebug")
     .setDescription("Show debug info for the bot."),
+
+  new SlashCommandBuilder()
+    .setName("strikes")
+    .setDescription("Check a member's activity check strikes.")
+    .addUserOption((option) =>
+      option
+        .setName("member")
+        .setDescription("The member to check.")
+        .setRequired(true)
+    ),
+
+  new SlashCommandBuilder()
+    .setName("clearstrikes")
+    .setDescription("Clear a member's activity check strikes.")
+    .addUserOption((option) =>
+      option
+        .setName("member")
+        .setDescription("The member to clear strikes for.")
+        .setRequired(true)
+    ),
+
+  new SlashCommandBuilder()
+    .setName("testdm")
+    .setDescription("Test DM messages without giving strikes or removing roles.")
+    .addUserOption((option) =>
+      option
+        .setName("member")
+        .setDescription("The member to send the test DM to.")
+        .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("type")
+        .setDescription("The type of DM to test.")
+        .setRequired(true)
+        .addChoices(
+          { name: "10-minute reminder", value: "reminder" },
+          { name: "missed activity check", value: "missed" },
+          { name: "3-strike demotion", value: "demoted" }
+        )
+    ),
 ].map((command) => command.toJSON());
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
